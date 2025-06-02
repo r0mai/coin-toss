@@ -5,8 +5,6 @@ import random
 import math
 import decimal
 
-# Set precision for decimal arithmetic
-decimal.getcontext().prec = 128 # Adjust this value based on your precision needs
 
 def simulate_player(rounds, loss, gain):
     tails = 0
@@ -29,7 +27,11 @@ if __name__ == "__main__":
     parser.add_argument("--players", type=int, default=100, help="Number of players")
     parser.add_argument("--loss", type=float, default=0.6, help="Loss rate")
     parser.add_argument("--gain", type=float, default=1.5, help="Gain rate")
+    parser.add_argument("--precision", type=int, default=100, help="Decimal precision")
     args = parser.parse_args()
+
+    # Set precision for decimal arithmetic
+    decimal.getcontext().prec = args.precision
 
     results = []
 
@@ -50,6 +52,7 @@ if __name__ == "__main__":
     average = total / len(results)
     print(f"Total sum:      {total}")
     print(f"Average result: {average}")
+    print(f"Casino balance: {args.players - total}")
 
     for i in range(len(results)):
         if results[i] < 1:
