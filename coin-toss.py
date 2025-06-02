@@ -36,15 +36,15 @@ if __name__ == "__main__":
     for player in range(args.players):
         results.append(simulate_player(args.rounds, args.loss, args.gain))
 
-    results.sort()
+    results.sort(reverse=True)
     
     print("Top 5 results:")
-    for i, result in enumerate(reversed(results[-5:]), 1):
-        print(f"  {i}. {result}")
+    for i in range(5):
+        print(f"{i+1:8d}. {results[i]}")
 
     print("Bottom 5 results:")
-    for i, result in enumerate(results[:5], 1):
-        print(f"  {i}. {result}")
+    for i in range(len(results) - 5, len(results)):
+        print(f"{i+1:8d}. {results[i]}")
 
     total = sum(results)
     average = total / len(results)
@@ -52,8 +52,13 @@ if __name__ == "__main__":
     print(f"Average result: {average}")
 
     for i in range(len(results)):
-        if results[i] >= 1:
-            print(f"Top {len(results) - i + 1} players have won")
+        if results[i] < 1:
+            if i == 0:
+                print("Nobody has won")
+            elif i == 1:
+                print("Top 1 player has won")
+            else:
+                print(f"Top {i} players have won")
             break
     
 
